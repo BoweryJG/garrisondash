@@ -14,15 +14,15 @@ interface GaugeConfig {
 export class Gauge extends THREE.Object3D {
   private config: GaugeConfig
   private needle: THREE.Group
-  private needleMesh: THREE.Mesh
-  private faceMesh: THREE.Mesh
-  private glassMesh: THREE.Mesh
+  // private needleMesh: THREE.Mesh
+  // private faceMesh: THREE.Mesh
+  // private glassMesh: THREE.Mesh
   private tickMarks: THREE.Group
   private digitDisplay: THREE.Group
   private value: number = 0
   private targetValue: number = 0
-  private glowLight: THREE.PointLight
-  private condensationTexture: THREE.Texture
+  private glowLight!: THREE.PointLight
+  private condensationTexture!: THREE.Texture
   
   constructor(scene: THREE.Scene, config: GaugeConfig) {
     super()
@@ -50,9 +50,9 @@ export class Gauge extends THREE.Object3D {
       this.startDataPolling()
     }
     
-    this.faceMesh = this.children.find(child => child.name === 'face') as THREE.Mesh
-    this.glassMesh = this.children.find(child => child.name === 'glass') as THREE.Mesh
-    this.needleMesh = this.needle.children[0] as THREE.Mesh
+    // this.faceMesh = this.children.find(child => child.name === 'face') as THREE.Mesh
+    // this.glassMesh = this.children.find(child => child.name === 'glass') as THREE.Mesh
+    // this.needleMesh = this.needle.children[0] as THREE.Mesh
     
     // Add to scene
     scene.add(this)
@@ -421,7 +421,7 @@ export class Gauge extends THREE.Object3D {
           .single()
         
         if (!error && data) {
-          const value = data[this.config.supabaseField!]
+          const value = (data as any)[this.config.supabaseField!]
           if (typeof value === 'number') {
             this.setValue(value)
           }
@@ -449,7 +449,7 @@ export class Gauge extends THREE.Object3D {
         },
         (payload) => {
           if (payload.new && this.config.supabaseField! in payload.new) {
-            const value = payload.new[this.config.supabaseField!]
+            const value = (payload.new as any)[this.config.supabaseField!]
             if (typeof value === 'number') {
               this.setValue(value)
             }

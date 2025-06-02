@@ -209,7 +209,7 @@ export class Scene {
     )
     this.composer.addPass(bloomPass)
     
-    const filmPass = new FilmPass(0.35, 0.5, 2048, false)
+    const filmPass = new FilmPass()
     this.composer.addPass(filmPass)
   }
   

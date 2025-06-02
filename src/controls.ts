@@ -13,7 +13,7 @@ export class TouchControls {
   private isMultiTouch: boolean = false
   private isDragging: boolean = false
   private rotationSpeed: number = 0.005
-  private panSpeed: number = 0.002
+  // private panSpeed: number = 0.002
   private zoomSpeed: number = 0.01
   
   constructor(camera: THREE.Camera, domElement: HTMLElement) {
@@ -210,7 +210,7 @@ export class TouchControls {
     this.lastTouch = position
   }
   
-  private onMouseUp(event: MouseEvent) {
+  private onMouseUp(_event: MouseEvent) {
     if (!this.isDragging && this.selectedObject) {
       this.handleGaugeTap(this.selectedObject)
     }
@@ -265,7 +265,7 @@ export class TouchControls {
     overlay.innerHTML = `
       <div class="gauge-label">${config.label}</div>
       <div class="gauge-value">0</div>
-      <div class="gauge-trend">² +5.2%</div>
+      <div class="gauge-trend">ï¿½ +5.2%</div>
     `
     
     overlay.classList.add('active')
