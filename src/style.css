@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#app {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  cursor: grab;
+}
+
+canvas:active {
+  cursor: grabbing;
+}
+
+.gauge-overlay {
+  position: absolute;
+  background: rgba(10, 10, 20, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 14px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.gauge-overlay.active {
+  opacity: 1;
+}
+
+.gauge-label {
+  color: #4cc9ff;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.gauge-value {
+  font-size: 24px;
+  font-weight: 300;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.gauge-trend {
+  color: #7fff7f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.gauge-trend.down {
+  color: #ff7f7f;
+}
+
+@media (max-width: 768px) {
+  .gauge-overlay {
+    font-size: 12px;
+    padding: 12px;
+  }
+  
+  .gauge-value {
+    font-size: 20px;
+  }
+}
