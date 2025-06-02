@@ -166,6 +166,10 @@ export class Scene {
       gauge.position.set(pos.x, pos.y, 0)
       this.gauges.push(gauge)
       this.controls.addInteractiveObject(gauge)
+      
+      // Set demo values
+      const demoValues = [42000, 1234, 68.5, 92.3]
+      gauge.setValue(demoValues[i])
     })
   }
   

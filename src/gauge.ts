@@ -411,10 +411,12 @@ export class Gauge extends THREE.Object3D {
   }
   
   private async startDataPolling() {
-    if (!this.config.supabaseTable || !this.config.supabaseField) return
+    if (!this.config.supabaseTable || !this.config.supabaseField || !supabase) return
     
     const fetchData = async () => {
       try {
+        if (!supabase) return
+        
         const { data, error } = await supabase
           .from(this.config.supabaseTable!)
           .select(this.config.supabaseField!)
@@ -438,24 +440,26 @@ export class Gauge extends THREE.Object3D {
     setInterval(fetchData, 5000)
     
     // Subscribe to realtime changes
-    supabase
-      .channel(`gauge_${this.config.label}`)
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: this.config.supabaseTable!
-        },
-        (payload) => {
-          if (payload.new && this.config.supabaseField! in payload.new) {
-            const value = (payload.new as any)[this.config.supabaseField!]
-            if (typeof value === 'number') {
-              this.setValue(value)
+    if (supabase) {
+      supabase
+        .channel(`gauge_${this.config.label}`)
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: this.config.supabaseTable!
+          },
+          (payload) => {
+            if (payload.new && this.config.supabaseField! in payload.new) {
+              const value = (payload.new as any)[this.config.supabaseField!]
+              if (typeof value === 'number') {
+                this.setValue(value)
+              }
             }
           }
-        }
-      )
-      .subscribe()
+        )
+        .subscribe()
+    }
   }
 }

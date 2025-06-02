@@ -64,3 +64,5 @@ yarn-error.log*
 # OS
 Thumbs.db
 EOF < /dev/null
+# Local Netlify folder
+.netlify
